@@ -47,6 +47,19 @@ export function freshestGap(p: Property): number {
   return Math.min(...p.checks.map((c) => c.daysAgo));
 }
 
+// Used by the interactive decay demo: what would this check's status/score be
+// if `extraDays` more days pass with nobody reconfirming anything?
+export function statusAt(check: TrustCheck, extraDays: number): CheckStatus {
+  const projected = { ...check, daysAgo: check.daysAgo + extraDays };
+  return statusOf(projected);
+}
+
+export function scoreAt(p: Property, extraDays: number): number {
+  const weights = { confirmed: 1, aging: 0.55, expired: 0.1 };
+  const total = p.checks.reduce((sum, c) => sum + weights[statusAt(c, extraDays)], 0);
+  return Math.round((total / p.checks.length) * 100);
+}
+
 const img = (seed: string, w = 1200, h = 800) =>
   `https://images.unsplash.com/${seed}?auto=format&fit=crop&w=${w}&h=${h}&q=80`;
 

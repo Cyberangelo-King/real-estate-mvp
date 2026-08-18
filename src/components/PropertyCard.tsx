@@ -1,5 +1,5 @@
 import type { Property } from "../data";
-import { formatPrice, confidenceScore, freshestGap } from "../data";
+import { formatPrice, confidenceScore, freshestGap, statusOf } from "../data";
 
 export default function PropertyCard({
   property,
@@ -11,6 +11,7 @@ export default function PropertyCard({
   const score = confidenceScore(property);
   const gap = freshestGap(property);
   const scoreColor = score >= 80 ? "bg-moss" : score >= 50 ? "bg-gold" : "bg-clay";
+  const dueSoon = property.checks.filter((c) => statusOf(c) !== "confirmed");
 
   return (
     <button
@@ -24,9 +25,28 @@ export default function PropertyCard({
           loading="lazy"
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
-        <div className="absolute top-3 left-3 flex items-center gap-1.5 bg-white/95 backdrop-blur rounded-full pl-1.5 pr-3 py-1 text-xs font-semibold">
-          <span className={`h-2 w-2 rounded-full ${scoreColor}`} />
-          {score} confidence
+        <div className="absolute top-3 left-3">
+          <div className="peer flex items-center gap-1.5 bg-white/95 backdrop-blur rounded-full pl-1.5 pr-3 py-1 text-xs font-semibold cursor-help">
+            <span className={`h-2 w-2 rounded-full ${scoreColor}`} />
+            {score} confidence
+          </div>
+          <div className="hidden peer-hover:block hover:block absolute top-full left-0 mt-2 z-10 w-52 bg-ink text-paper text-xs rounded-lg p-3 shadow-xl">
+            {dueSoon.length === 0 ? (
+              <p>All 5 checks current — nothing due soon.</p>
+            ) : (
+              <>
+                <p className="text-paper/60 mb-1.5">{dueSoon.length} check{dueSoon.length > 1 ? "s" : ""} need attention:</p>
+                <ul className="space-y-1">
+                  {dueSoon.map((c) => (
+                    <li key={c.label} className="flex justify-between gap-2">
+                      <span>{c.label}</span>
+                      <span className="text-gold">{statusOf(c) === "expired" ? "expired" : "aging"}</span>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </div>
         </div>
         <div className="absolute top-3 right-3 bg-ink/70 text-paper backdrop-blur rounded-full px-2.5 py-1 text-[11px] font-medium">
           {property.type}

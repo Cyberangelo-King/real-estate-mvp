@@ -3,6 +3,7 @@ import { properties } from "./data";
 import Nav from "./components/Nav";
 import Hero from "./components/Hero";
 import Discover from "./components/Discover";
+import LiveDecayDemo from "./components/LiveDecayDemo";
 import HowItWorks from "./components/HowItWorks";
 import ForAgents from "./components/ForAgents";
 import Footer from "./components/Footer";
@@ -23,13 +24,14 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-paper text-ink">
+    <div className="min-h-screen bg-paper text-ink grain">
       <Nav onHome={goHome} />
       {active ? (
         <PropertyDetail property={active} onBack={goHome} />
       ) : (
         <>
           <Hero />
+          <LiveDecayDemo />
           <Discover onOpen={openProperty} />
           <HowItWorks />
           <ForAgents />

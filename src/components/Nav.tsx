@@ -9,8 +9,9 @@ export default function Nav({ onHome }: { onHome: () => void }) {
           <span className="font-display text-xl tracking-tight">Verity</span>
         </button>
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-ink/60">
+          <a href="#try-it" className="hover:text-ink transition-colors">Watch it decay</a>
           <a href="#discover" className="hover:text-ink transition-colors">Discover</a>
-          <a href="#how-it-works" className="hover:text-ink transition-colors">How it works</a>
+          <a href="#how-it-works" className="hover:text-ink transition-colors">Why it works</a>
           <a href="#for-agents" className="hover:text-ink transition-colors">For agents</a>
         </nav>
         <button className="text-sm font-semibold bg-ink text-paper rounded-full px-4 py-2 hover:bg-moss transition-colors">

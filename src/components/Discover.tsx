@@ -35,8 +35,8 @@ export default function Discover({ onOpen }: { onOpen: (id: string) => void }) {
     <section id="discover" className="max-w-6xl mx-auto px-5 md:px-8 py-16 md:py-20">
       <div className="flex items-end justify-between flex-wrap gap-4 mb-8">
         <div>
-          <h2 className="font-display text-3xl">Discover listings</h2>
-          <p className="text-ink/55 mt-1">Six markets, one standard of proof. Every card shows its receipts.</p>
+          <h2 className="font-display text-3xl">Six markets. Same receipts every time.</h2>
+          <p className="text-ink/55 mt-1">Hover the confidence badge on any card — it tells you exactly what's aging, not just a number.</p>
         </div>
       </div>
 
