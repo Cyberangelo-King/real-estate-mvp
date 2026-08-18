@@ -12,6 +12,8 @@ export interface Property {
   title: string;
   city: string;
   country: string;
+  lat: number;
+  lng: number;
   price: number;
   currency: string;
   period?: "sale" | "month" | "night";
@@ -66,6 +68,8 @@ const img = (seed: string, w = 1200, h = 800) =>
 export const properties: Property[] = [
   {
     id: "meridian-loft-lisbon",
+    lat: 38.7169,
+    lng: -9.1399,
     title: "The Meridian Loft",
     city: "Lisbon",
     country: "Portugal",
@@ -96,6 +100,8 @@ export const properties: Property[] = [
   },
   {
     id: "palm-villa-lekki",
+    lat: 6.4488,
+    lng: 3.4726,
     title: "Palm Court Villa",
     city: "Lekki, Lagos",
     country: "Nigeria",
@@ -126,6 +132,8 @@ export const properties: Property[] = [
   },
   {
     id: "canal-house-amsterdam",
+    lat: 52.3676,
+    lng: 4.9041,
     title: "Prinsengracht Canal House",
     city: "Amsterdam",
     country: "Netherlands",
@@ -156,6 +164,8 @@ export const properties: Property[] = [
   },
   {
     id: "skyline-penthouse-singapore",
+    lat: 1.3521,
+    lng: 103.8198,
     title: "Marina Skyline Penthouse",
     city: "Singapore",
     country: "Singapore",
@@ -186,6 +196,8 @@ export const properties: Property[] = [
   },
   {
     id: "adobe-retreat-oaxaca",
+    lat: 17.0732,
+    lng: -96.7266,
     title: "Casa de Barro Retreat",
     city: "Oaxaca",
     country: "Mexico",
@@ -216,6 +228,8 @@ export const properties: Property[] = [
   },
   {
     id: "harbour-plot-capetown",
+    lat: -34.0483,
+    lng: 18.3535,
     title: "Hout Bay Coastal Plot",
     city: "Cape Town",
     country: "South Africa",

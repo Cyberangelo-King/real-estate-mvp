@@ -1,14 +1,17 @@
 import { useMemo, useState } from "react";
 import { properties, confidenceScore } from "../data";
 import PropertyCard from "./PropertyCard";
+import MapView from "./MapView";
 
 type SortKey = "confidence" | "price-asc" | "price-desc" | "fresh";
+type ViewMode = "grid" | "map";
 
-export default function Discover({ onOpen }: { onOpen: (id: string) => void }) {
+export default function Discover() {
   const [query, setQuery] = useState("");
   const [type, setType] = useState<string>("All");
   const [sort, setSort] = useState<SortKey>("confidence");
   const [minConfidence, setMinConfidence] = useState(0);
+  const [view, setView] = useState<ViewMode>("grid");
 
   const types = ["All", ...Array.from(new Set(properties.map((p) => p.type)))];
 
@@ -37,6 +40,20 @@ export default function Discover({ onOpen }: { onOpen: (id: string) => void }) {
         <div>
           <h2 className="font-display text-3xl">Six markets. Same receipts every time.</h2>
           <p className="text-ink/55 mt-1">Hover the confidence badge on any card — it tells you exactly what's aging, not just a number.</p>
+        </div>
+        <div className="flex items-center bg-white border border-line rounded-full p-1 text-sm font-semibold">
+          <button
+            onClick={() => setView("grid")}
+            className={`px-4 py-1.5 rounded-full transition-colors ${view === "grid" ? "bg-ink text-paper" : "text-ink/50 hover:text-ink"}`}
+          >
+            Grid
+          </button>
+          <button
+            onClick={() => setView("map")}
+            className={`px-4 py-1.5 rounded-full transition-colors ${view === "map" ? "bg-ink text-paper" : "text-ink/50 hover:text-ink"}`}
+          >
+            Map
+          </button>
         </div>
       </div>
 
@@ -81,14 +98,18 @@ export default function Discover({ onOpen }: { onOpen: (id: string) => void }) {
         </div>
       </div>
 
+      <p className="text-xs text-ink/40 mb-4">{results.length} of {properties.length} listings</p>
+
       {results.length === 0 ? (
         <p className="text-ink/50 text-center py-16">
           No listings clear that confidence bar right now — try lowering it.
         </p>
+      ) : view === "map" ? (
+        <MapView properties={results} />
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {results.map((p) => (
-            <PropertyCard key={p.id} property={p} onOpen={onOpen} />
+            <PropertyCard key={p.id} property={p} />
           ))}
         </div>
       )}

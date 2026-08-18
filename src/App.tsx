@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { properties } from "./data";
+import { Route, Routes, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import Nav from "./components/Nav";
 import Hero from "./components/Hero";
 import Discover from "./components/Discover";
@@ -8,35 +8,47 @@ import HowItWorks from "./components/HowItWorks";
 import ForAgents from "./components/ForAgents";
 import Footer from "./components/Footer";
 import PropertyDetail from "./components/PropertyDetail";
+import SavedPage from "./components/SavedPage";
+
+function Home() {
+  return (
+    <>
+      <Hero />
+      <LiveDecayDemo />
+      <Discover />
+      <HowItWorks />
+      <ForAgents />
+    </>
+  );
+}
+
+function ScrollToHash() {
+  const { hash, pathname } = useLocation();
+  useEffect(() => {
+    if (hash) {
+      const el = document.querySelector(hash);
+      if (el) {
+        // wait a tick for the route's content to mount
+        requestAnimationFrame(() => el.scrollIntoView({ behavior: "smooth" }));
+        return;
+      }
+    }
+    window.scrollTo({ top: 0 });
+  }, [hash, pathname]);
+  return null;
+}
 
 export default function App() {
-  const [openId, setOpenId] = useState<string | null>(null);
-  const active = properties.find((p) => p.id === openId) ?? null;
-
-  const goHome = () => {
-    setOpenId(null);
-    window.scrollTo({ top: 0 });
-  };
-
-  const openProperty = (id: string) => {
-    setOpenId(id);
-    window.scrollTo({ top: 0 });
-  };
-
   return (
     <div className="min-h-screen bg-paper text-ink grain">
-      <Nav onHome={goHome} />
-      {active ? (
-        <PropertyDetail property={active} onBack={goHome} />
-      ) : (
-        <>
-          <Hero />
-          <LiveDecayDemo />
-          <Discover onOpen={openProperty} />
-          <HowItWorks />
-          <ForAgents />
-        </>
-      )}
+      <ScrollToHash />
+      <Nav />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/listing/:id" element={<PropertyDetail />} />
+        <Route path="/saved" element={<SavedPage />} />
+        <Route path="*" element={<Home />} />
+      </Routes>
       <Footer />
     </div>
   );
