@@ -1,47 +1,39 @@
 # Verity — real estate you can verify, not just view
 
-A 3-hour concept MVP built to answer one challenge: *"study real estate websites, then do
-something better."* See [`RESEARCH.md`](./RESEARCH.md) for the full research trail, thesis,
-and red/white/blue/gold team review.
+A focused product MVP built around one problem: property listings can become stale, misleading or difficult to verify after publication.
 
-## The idea in one line
+## Core idea
 
-Every listing carries a **Confidence Timeline** — five individually-timestamped trust checks
-(agent identity, title/ownership, physical walkthrough, price consistency, live availability),
-each with its own expiry window. Miss the window and that check visibly ages and the listing's
-public confidence score drops, instead of a "Verified" badge that's granted once and never
-revisited.
+Every listing carries a **Confidence Timeline** made from independently expiring checks such as agent identity, ownership/title evidence, physical walkthrough, price consistency and availability.
 
-## Stack
+A check ages when it is not renewed. The interface therefore communicates **freshness of evidence**, not a permanent “verified” badge.
 
-React 19 + TypeScript + Vite + Tailwind CSS v4. Fully static, mock data only — no backend
-required to demonstrate the thesis (see "Path to production" below for what would need real
-persistence).
+## Why this matters
 
-## Run locally
+Trust in property discovery is not a decorative badge. It is a process. The product should make the underlying evidence, date and uncertainty visible to the buyer.
 
-```bash
-npm install
-npm run dev      # http://localhost:5173
-npm run build    # production build -> dist/
-```
+## Current architecture
 
-## Path to production
+React 19 · TypeScript · Vite · Tailwind CSS
 
-- **Auth + persistence (Supabase or similar):** real agents need accounts to submit and renew
-  checks; buyers need saved searches. Currently everything is mock data recalculated client-side.
-- **Document verification pipeline:** the "title & ownership" and "agent identity" checks need a
-  real integration with land registries / licensing bodies per market (this is genuinely the hard,
-  valuable part of the product — worth scoping market-by-market rather than faking).
-- **Photo/video authenticity:** reverse-image-check listing photos to catch recycled/stock images,
-  a common scam vector this MVP doesn't yet address.
-- **Payments/booking flow** for the short-term-rental style listings.
-- **Real map-based discovery** once there's a real inventory to place on it.
-- **Mobile app or PWA** — research showed mobile is the dominant search device; this MVP is
-  responsive but a native/PWA layer would matter for the "reconfirm from the field" agent flow.
+The current MVP uses mock data deliberately so the product thesis can be tested before expensive integrations are built.
 
-## What we cut, and why
+## Production path
 
-See "What we cut" in `RESEARCH.md` — map search, mortgage calculator, and AI chat search were all
-considered and dropped to keep the demo focused on the one defensible idea instead of feature
-padding.
+- Identity and role-based accounts
+- Evidence-backed agent verification
+- Market-specific title/ownership verification
+- Timestamped inspection evidence
+- Listing-photo authenticity checks
+- Availability renewal
+- Saved searches and alerts
+- Secure document handling
+- Audit trails for every verification event
+
+## Product rule
+
+Do not fake trust. If a check cannot be independently verified, show that limitation instead of manufacturing confidence.
+
+## Status
+
+Concept MVP. The next stage is validation with agents and buyers, followed by a narrow real-data pilot in one market.
